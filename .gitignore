@@ -1,1 +1,20 @@
+# Ignore IDE config folders
 /.idea
+
+# Ignore Python bytecode files
+*.pyc
+*.pyo
+
+# Ignore __pycache__ directories
+__pycache__/
+
+# Ignore the virtual environment folder (env)
+env/
+/env
+env/pyvenv.cfg
+/theMLhub/media
+/theMLhub/media/data_visualizations
+*.pyc
+/avc_predictions/media/processed_datasets
+/avc_predictions/media/trained_models
+avc_predictions/avc_predictions/settings.py

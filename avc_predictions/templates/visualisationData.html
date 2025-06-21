@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Visualisation Data</title>
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'images/favicon.png' %}">
+    <!-- Custom Stylesheet -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css">
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+
+</head>
+
+<body>
+
+    <!-- Preloader start -->
+    <div id="preloader">
+        <div class="loader">
+            <svg class="circular" viewBox="25 25 50 50">
+                <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="3" stroke-miterlimit="10" />
+            </svg>
+        </div>
+    </div>
+    <!-- Preloader end -->
+
+    <div id="main-wrapper" style="min-height: 130vh !important;">
+
+        {% include "navbar.html" %}
+        {% include "sideBar.html" %}
+
+        <div class="content-body">
+            <div class="container-fluid">
+
+                <h1>Visualizations for Dataset: {{ dataset.datasetCostumName }}{{ dataset.preprocessedCostumName }}</h1>
+
+                    {% if data_visualizations %}
+                        <div class="row">
+                            {% for visualization in data_visualizations %}
+                                <div class="col-6" style="padding: 20px">
+                                    <h3>{{ visualization.visualization_name }}</h3>
+                                    <p>Graph Type: {{ visualization.graph_type }}</p>
+                                    <img style="max-height: 60vh" src="{{ visualization.graph_file.url }}" alt="{{ visualization.visualization_name }}">
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <p>No visualizations found for this dataset.</p>
+                    {% endif %}
+
+            </div>
+        </div>
+
+        {% include "footer.html" %}
+    </div>
+
+    <!-- Scripts -->
+    <script src="{% static 'plugins/common/common.min.js' %}"></script>
+    <script src="{% static 'js/custom.min.js' %}"></script>
+    <script src="{% static 'js/settings.js' %}"></script>
+    <script src="{% static 'js/gleek.js' %}"></script>
+    <script src="{% static 'js/styleSwitcher.js' %}"></script>
+
+</body>
+
+</html>

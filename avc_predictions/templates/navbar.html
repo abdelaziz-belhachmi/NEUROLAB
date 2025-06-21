@@ -1,0 +1,64 @@
+
+{% load static %}
+
+   <!--**********************************
+            Nav header start
+        ***********************************-->
+<div data-nav-headerbg="color_9" >
+        <div class="nav-header" >
+            <div class="brand-logo">
+                <a href="{% url 'home' %}">
+                    <b class="logo-abbr"><img src="{% static 'images/neurolab-icon.png' %}" alt=""> </b>
+                    <span class="logo-compact"><img src="{% static './images/neurolab-icon.png' %}" alt=""></span>
+                    <span class="brand-title">
+                        <img src="{% static 'images/neurolab-icon.png' %}" style="filter : invert(1);width: 160px" alt="">
+                    </span>
+                </a>
+            </div>
+        </div>
+</div>
+        <!--**********************************
+            Nav header end
+        ***********************************-->
+
+        <!--**********************************
+            Header start
+        ***********************************-->
+        <div class="header">
+            <div class="header-content clearfix">
+
+<!--                <div class="nav-control">-->
+<!--                    <div class="hamburger">-->
+<!--                        <span class="toggle-icon"><i class="icon-menu"></i></span>-->
+<!--                    </div>-->
+<!--                </div>-->
+
+                <div class="header-right">
+                    <ul class="clearfix">
+
+                        <li class="icons dropdown">
+                            <div class="user-img c-pointer position-relative" data-toggle="dropdown" style="padding-top: 12px">
+                                <img src="{{ MEDIA_URL }}{{ user.profile_picture_path }}" style="height: 65px;width: 65px" alt="">
+                            </div>
+                            <div class="drop-down dropdown-profile   dropdown-menu">
+                                <div class="dropdown-content-body">
+                                    <ul>
+                                          <li>
+                                            <a href="{% url 'app_profile' %}"><i class="icon-user"></i> <span>Profile</span></a>
+                                        </li>
+                                        <hr class="my-2">
+                                        <li>
+                                            <a href="{% url 'home' %}"><i class="icon-home"></i> <span>Home</span></a>
+                                        </li>
+
+                                        <hr class="my-2">
+                                        <li><a href="{% url 'Logout' %}"><i class="icon-key"></i> <span>Logout</span></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+

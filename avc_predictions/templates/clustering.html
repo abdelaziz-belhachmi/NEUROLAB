@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Clustering Models</title>
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'images/favicon.png' %}">
+    <!-- Custom Stylesheet -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css">
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+
+</head>
+
+<body>
+
+
+    <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module"></script>
+
+    <!-- Preloader -->
+    <div id="preloader">
+        <div class="loader" style="width: 500px; height: 500px">
+            <dotlottie-player src="https://lottie.host/341def04-ff40-4b3b-a5db-9d0365e72412/YyUc5oyPre.lottie" background="transparent" speed="1.5" style="width: 100%; height: 100%" loop autoplay></dotlottie-player>
+        </div>
+    </div>
+
+    <!-- Main content -->
+    <div id="main-wrapper">
+        {% include "navbar.html" %}
+        {% include "sideBar.html" %}
+
+        <div class="content-body">
+            <div class="container-fluid">
+                <h3 style="padding: 10px">Choose a Machine Learning Model To Train</h3>
+                <div class="row">
+                    <!-- Model Cards -->
+                    <div class="col-3">
+                        <div class="card bg-pink shadow-lg">
+                            <div class="card-body">
+                                <div class="text-center">
+                                    <span class="display-5">
+                                        <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100" viewBox="0 0 50 50">
+                                        <g fill="#ffffff">
+                                            <path d="M 25 1 A 2.5 2.5 0 0 0 22.509766 3.2851562 L 7.2539062 12.119141 A 2.5 2.5 0 0 0 6.5 12 A 2.5 2.5 0 0 0 5 16.498047 L 5 33.503906 A 2.5 2.5 0 0 0 6.5 38 A 2.5 2.5 0 0 0 7.2558594 37.882812 L 22.513672 46.716797 A 2.5 2.5 0 0 0 25 49 A 2.5 2.5 0 0 0 27.490234 46.714844 L 42.746094 37.880859 A 2.5 2.5 0 0 0 43.5 38 A 2.5 2.5 0 0 0 45 33.501953 L 45 16.496094 A 2.5 2.5 0 0 0 43.5 12 A 2.5 2.5 0 0 0 42.744141 12.117188 L 27.486328 3.2832031 A 2.5 2.5 0 0 0 25 1 z M 22.271484 5.7363281 L 15.134766 18.130859 L 8.9960938 14.578125 A 2.5 2.5 0 0 0 8.8027344 13.533203 L 22.271484 5.7363281 z M 27.730469 5.7363281 L 41.197266 13.533203 A 2.5 2.5 0 0 0 41.001953 14.580078 L 34.867188 18.132812 L 27.730469 5.7363281 z M 24.460938 5.9394531 A 2.5 2.5 0 0 0 25 6 A 2.5 2.5 0 0 0 25.539062 5.9394531 L 33.134766 19.134766 L 26.480469 22.986328 A 2.5 2.5 0 0 0 25 22.5 A 2.5 2.5 0 0 0 23.521484 22.988281 L 16.865234 19.134766 L 24.460938 5.9394531 z M 8.1347656 16.390625 L 14.136719 19.865234 L 7 32.259766 L 7 16.949219 A 2.5 2.5 0 0 0 8.1347656 16.390625 z M 41.867188 16.390625 A 2.5 2.5 0 0 0 43 16.947266 L 43 32.261719 L 35.865234 19.865234 L 41.867188 16.390625 z M 15.867188 20.867188 L 22.519531 24.71875 A 2.5 2.5 0 0 0 24 27.289062 L 24 35 L 8.9472656 35 A 2.5 2.5 0 0 0 8.3867188 33.861328 L 15.867188 20.867188 z M 34.132812 20.867188 L 41.615234 33.861328 A 2.5 2.5 0 0 0 41.054688 35 L 26 35 L 26 27.289062 A 2.5 2.5 0 0 0 27.482422 24.71875 L 34.132812 20.867188 z M 9.7226562 37 L 24 37 L 24 44.210938 A 2.5 2.5 0 0 0 23.179688 44.789062 L 9.7226562 37 z M 26 37 L 40.277344 37 L 26.820312 44.789062 A 2.5 2.5 0 0 0 26 44.210938 L 26 37 z">
+                                            </path>
+                                        </g>
+                                        </svg>
+                                    </span>
+                                    <h2 class="mt-1" style="color: white">AutoML</h2>
+                                    <p style="color: white">General Purpose</p>
+                                    <button class="btn gradient-10 btn-md border-0 btn-rounded px-5" onclick="openModal('AutoML')">Train</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="text-center">
+                                    <span class="display-5">
+                                        <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100" viewBox="0 0 50 50">
+                                            <path d="M 25 1 A 2.5 2.5 0 0 0 22.509766 3.2851562 L 7.2539062 12.119141 A 2.5 2.5 0 0 0 6.5 12 A 2.5 2.5 0 0 0 5 16.498047 L 5 33.503906 A 2.5 2.5 0 0 0 6.5 38 A 2.5 2.5 0 0 0 7.2558594 37.882812 L 22.513672 46.716797 A 2.5 2.5 0 0 0 25 49 A 2.5 2.5 0 0 0 27.490234 46.714844 L 42.746094 37.880859 A 2.5 2.5 0 0 0 43.5 38 A 2.5 2.5 0 0 0 45 33.501953 L 45 16.496094 A 2.5 2.5 0 0 0 43.5 12 A 2.5 2.5 0 0 0 42.744141 12.117188 L 27.486328 3.2832031 A 2.5 2.5 0 0 0 25 1 z M 22.271484 5.7363281 L 15.134766 18.130859 L 8.9960938 14.578125 A 2.5 2.5 0 0 0 8.8027344 13.533203 L 22.271484 5.7363281 z M 27.730469 5.7363281 L 41.197266 13.533203 A 2.5 2.5 0 0 0 41.001953 14.580078 L 34.867188 18.132812 L 27.730469 5.7363281 z M 24.460938 5.9394531 A 2.5 2.5 0 0 0 25 6 A 2.5 2.5 0 0 0 25.539062 5.9394531 L 33.134766 19.134766 L 26.480469 22.986328 A 2.5 2.5 0 0 0 25 22.5 A 2.5 2.5 0 0 0 23.521484 22.988281 L 16.865234 19.134766 L 24.460938 5.9394531 z M 8.1347656 16.390625 L 14.136719 19.865234 L 7 32.259766 L 7 16.949219 A 2.5 2.5 0 0 0 8.1347656 16.390625 z M 41.867188 16.390625 A 2.5 2.5 0 0 0 43 16.947266 L 43 32.261719 L 35.865234 19.865234 L 41.867188 16.390625 z M 15.867188 20.867188 L 22.519531 24.71875 A 2.5 2.5 0 0 0 24 27.289062 L 24 35 L 8.9472656 35 A 2.5 2.5 0 0 0 8.3867188 33.861328 L 15.867188 20.867188 z M 34.132812 20.867188 L 41.615234 33.861328 A 2.5 2.5 0 0 0 41.054688 35 L 26 35 L 26 27.289062 A 2.5 2.5 0 0 0 27.482422 24.71875 L 34.132812 20.867188 z M 9.7226562 37 L 24 37 L 24 44.210938 A 2.5 2.5 0 0 0 23.179688 44.789062 L 9.7226562 37 z M 26 37 L 40.277344 37 L 26.820312 44.789062 A 2.5 2.5 0 0 0 26 44.210938 L 26 37 z">
+                                            </path>
+                                        </svg>
+                                    </span>
+                                    <h2 class="mt-3">K-Means</h2>
+                                    <p>Clustering</p>
+                                    <button class="btn gradient-8 btn-md border-0 btn-rounded px-5" onclick="openModal('K-Means')">Train</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {% include "footer.html" %}
+    </div>
+
+    <!-- Modal -->
+    <div class="modal" id="trainModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="trainModalLabel">Train Model</h5>
+                    <button type="button" class="btn-close" onclick="closeModal()">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <form id="trainForm">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="modelName" class="form-label">Model</label>
+                            <input type="text" class="form-control" id="modelName" readonly>
+                        </div>
+                        <div class="mb-3">
+                            <label for="ChosentrainingFile" class="form-label">Select Training Dataset</label>
+                            <select name="ChosentrainingFile" id="ChosentrainingFile" class="form-control" required>
+                                {% for file in processeddatasets %}
+                                    {% if not file.raw_dataset.TargetColumn %}
+                                        <option value="{{ file.id }}">{{ file.raw_dataset.datasetCostumName }}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="trainingMode" class="form-label">Training Mode</label>
+                            <select name="trainingMode" id="trainingMode" class="form-control">
+                                <option value="true">Auto</option>
+                                <option value="false">Manual</option>
+                            </select>
+                        </div>
+
+                        <div id="dynamicParams"></div>
+
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="closeModal()">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="startTraining()">Start Training</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<!--    <script>-->
+<!--        // Model configurations-->
+<!--        const modelsConfig = {-->
+<!--            "AutoML": {-->
+<!--                hyperparameters: [-->
+<!--                    { name: "max_runtime_secs", label: "Max Trainig Time (sec)", type: "number", default: 30, step: 1 },-->
+<!--                    { name: "max_models", label: "Number of Models to train", type: "number", default: 3, step: 1 }-->
+<!--                ]-->
+<!--            },-->
+<!--            "K-Means": {-->
+<!--                hyperparameters: [-->
+<!--                    { id: "nClusters", label: "Number of Clusters", type: "number", default: 5, min: 2 },-->
+<!--                    { id: "maxIterations", label: "Max Iterations", type: "number", default: 300, min: 1 }-->
+<!--                ]-->
+<!--            }-->
+<!--        };-->
+
+<!--        // Monitor training mode selection-->
+<!--    document.getElementById("trainingMode").addEventListener("change", function () {-->
+<!--        const trainingMode = this.value; // Get the selected value-->
+<!--        const paramsContainer = document.getElementById("dynamicParams");-->
+<!--        if (trainingMode === "true") {-->
+<!--            // Hide hyperparameter inputs for "Auto" mode-->
+<!--            paramsContainer.style.display = "none";-->
+<!--        } else {-->
+<!--            // Show hyperparameter inputs for "Manual" mode-->
+<!--            paramsContainer.style.display = "block";-->
+<!--        }-->
+<!--    });-->
+
+<!--    // Updated openModal function-->
+<!--    function openModal(modelName) {-->
+<!--        document.getElementById("modelName").value = modelName;-->
+<!--        const paramsContainer = document.getElementById("dynamicParams");-->
+<!--        paramsContainer.innerHTML = ""; // Clear previous inputs-->
+
+<!--        const modelConfig = modelsConfig[modelName];-->
+<!--        if (modelConfig && modelConfig.hyperparameters.length > 0) {-->
+<!--            modelConfig.hyperparameters.forEach(param => {-->
+<!--                const inputGroup = document.createElement("div");-->
+<!--                inputGroup.className = "mb-3";-->
+
+<!--                const label = document.createElement("label");-->
+<!--                label.setAttribute("for", param.id);-->
+<!--                label.className = "form-label";-->
+<!--                label.textContent = param.label;-->
+
+<!--                const input = document.createElement("input");-->
+<!--                input.type = param.type;-->
+<!--                input.className = "form-control";-->
+<!--                input.id = param.id;-->
+<!--                input.value = param.default;-->
+<!--                if (param.min !== undefined) input.min = param.min;-->
+
+<!--                inputGroup.appendChild(label);-->
+<!--                inputGroup.appendChild(input);-->
+<!--                paramsContainer.appendChild(inputGroup);-->
+<!--            });-->
+<!--        }-->
+
+<!--        // Default to showing hyperparameters for "Manual" mode-->
+<!--        const trainingMode = document.getElementById("trainingMode").value;-->
+<!--        paramsContainer.style.display = trainingMode === "true" ? "none" : "block";-->
+
+<!--        document.getElementById("trainModal").style.display = "flex";-->
+<!--    }-->
+
+
+<!--        function closeModal() {-->
+<!--            document.getElementById("trainModal").style.display = "none";-->
+<!--        }-->
+
+<!--        function startTraining() {-->
+<!--            const modelName = document.getElementById("modelName").value;-->
+<!--            const datasetId = document.getElementById("ChosentrainingFile").value;-->
+<!--            const trainingMode = document.getElementById("trainingMode").value;-->
+<!--            const params = {};-->
+<!--            const inputs = document.querySelectorAll("#dynamicParams input");-->
+
+<!--            inputs.forEach(input => {-->
+<!--                params[input.id] = input.value;-->
+<!--            });-->
+
+<!--            // Create form dynamically-->
+<!--            const form = document.createElement("form");-->
+<!--            form.method = "POST";-->
+<!--            form.action = `/train_model/${modelName}/${datasetId}/unsupervised/`;-->
+
+<!--            // Add CSRF token-->
+<!--            const csrfToken = document.querySelector("input[name='csrfmiddlewaretoken']").value;-->
+<!--            const csrfInput = document.createElement("input");-->
+<!--            csrfInput.type = "hidden";-->
+<!--            csrfInput.name = "csrfmiddlewaretoken";-->
+<!--            csrfInput.value = csrfToken;-->
+<!--            form.appendChild(csrfInput);-->
+
+<!--            // Add auto/manual setting-->
+<!--            const modeInput = document.createElement("input");-->
+<!--            modeInput.type = "hidden";-->
+<!--            modeInput.name = "auto";-->
+<!--            modeInput.value = trainingMode;-->
+<!--            form.appendChild(modeInput);-->
+
+<!--            // Add hyperparameters-->
+<!--            for (const [key, value] of Object.entries(params)) {-->
+<!--                const paramInput = document.createElement("input");-->
+<!--                paramInput.type = "hidden";-->
+<!--                paramInput.name = key;-->
+<!--                paramInput.value = value;-->
+<!--                form.appendChild(paramInput);-->
+<!--            }-->
+
+<!--            // Append the form to the body-->
+<!--            document.body.appendChild(form);-->
+
+<!--            // Submit the form-->
+<!--            form.submit();-->
+
+<!--            // Close the modal-->
+<!--            closeModal();-->
+
+<!--            // Start preloader-->
+<!--            const preloader = document.getElementById("preloader");-->
+<!--            preloader.style.display = "block";-->
+<!--        }-->
+
+
+<!--    </script>-->
+
+
+    <script>
+    // Model configurations
+    const modelsConfig = {
+        "AutoML": {
+            hyperparameters: [
+                { id: "max_runtime_secs", label: "Max Trainig Time (sec)", type: "number", default: 30, step: 1 },
+                { id: "maxIterations", label: "Max Iterations", type: "number", default: 100, step: 1 },
+                { id: "nClusters", label: "Number of Clusters k", type: "number", default: 5, min: 2 },
+
+            ]
+        },
+        "K-Means": {
+            hyperparameters: [
+                { id: "nClusters", label: "Number of Clusters", type: "number", default: 5, min: 2 },
+                { id: "maxIterations", label: "Max Iterations", type: "number", default: 300, min: 1 }
+            ]
+        }
+    };
+
+    // Monitor training mode selection
+    document.getElementById("trainingMode").addEventListener("change", function () {
+        const trainingMode = this.value; // Get the selected value
+        const paramsContainer = document.getElementById("dynamicParams");
+        if (trainingMode === "true") {
+            // Hide hyperparameter inputs for "Auto" mode
+            paramsContainer.style.display = "none";
+        } else {
+            // Show hyperparameter inputs for "Manual" mode
+            paramsContainer.style.display = "block";
+        }
+    });
+
+    // Open modal and populate based on model
+function openModal(modelName) {
+    document.getElementById("modelName").value = modelName;
+    const paramsContainer = document.getElementById("dynamicParams");
+    paramsContainer.innerHTML = ""; // Clear previous inputs
+
+    const modelConfig = modelsConfig[modelName];
+    if (modelConfig && modelConfig.hyperparameters.length > 0) {
+        modelConfig.hyperparameters.forEach(param => {
+            const inputGroup = document.createElement("div");
+            inputGroup.className = "mb-3";
+
+            const label = document.createElement("label");
+            label.setAttribute("for", param.id);
+            label.className = "form-label";
+            label.textContent = param.label;
+
+            const input = document.createElement("input");
+            input.type = param.type;
+            input.className = "form-control";
+            input.id = param.id;
+            input.value = param.default;
+            if (param.min !== undefined) input.min = param.min;
+
+            inputGroup.appendChild(label);
+            inputGroup.appendChild(input);
+            paramsContainer.appendChild(inputGroup);
+        });
+    }
+
+    // Toggle visibility of hyperparameters based on mode
+    const trainingModeSelect = document.getElementById("trainingMode");
+    trainingModeSelect.addEventListener("change", () => {
+        if (trainingModeSelect.value === "true") { // Auto mode
+            paramsContainer.style.display = "none";
+        } else { // Manual mode
+            paramsContainer.style.display = "block";
+        }
+    });
+
+    // Set initial visibility
+    if (trainingModeSelect.value === "true") {
+        paramsContainer.style.display = "none";
+    } else {
+        paramsContainer.style.display = "block";
+    }
+
+    document.getElementById("trainModal").style.display = "flex";
+}
+
+    // Close modal
+    function closeModal() {
+        document.getElementById("trainModal").style.display = "none";
+    }
+
+    // Start training
+function startTraining() {
+    const modelName = document.getElementById("modelName").value;
+    const datasetId = document.getElementById("ChosentrainingFile").value;
+    const trainingMode = document.getElementById("trainingMode").value; // "true" (Auto) or "false" (Manual)
+    const params = {};
+    params['auto'] = trainingMode
+
+    // Collect hyperparameters only if Manual mode is selected
+    if (trainingMode === "false") {
+        const inputs = document.querySelectorAll("#dynamicParams input");
+        inputs.forEach(input => {
+            params[input.id || input.name] = Number(input.value);
+        });
+    }
+
+    // Create form dynamically
+    const form = document.createElement("form");
+    form.method = "POST";
+    form.action = `/train_model/${modelName}/${datasetId}/unsupervised/`;
+
+    // Add CSRF token
+    const csrfToken = document.querySelector("input[name='csrfmiddlewaretoken']").value;
+    const csrfInput = document.createElement("input");
+    csrfInput.type = "hidden";
+    csrfInput.name = "csrfmiddlewaretoken";
+    csrfInput.value = csrfToken;
+    form.appendChild(csrfInput);
+
+    // Add auto/manual mode setting
+    // const modeInput = document.createElement("input");
+    // modeInput.type = "hidden";
+    // modeInput.name = "auto";
+    // modeInput.value = trainingMode;
+    // form.appendChild(modeInput);
+
+    const paramsInput = document.createElement("input");
+    paramsInput.type = "hidden";
+    paramsInput.name = "params";
+    paramsInput.value = JSON.stringify(params); // Convert object to JSON string
+    form.appendChild(paramsInput);
+
+    // Append the form to the body
+    document.body.appendChild(form);
+
+    // Submit the form
+    form.submit();
+
+    // Close the modal
+    closeModal();
+
+    // Start preloader
+    const preloader = document.getElementById("preloader");
+    preloader.style.display = "block";
+}
+
+
+    </script>
+
+
+
+    <style>
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: none; /* Hidden by default */
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-dialog {
+            background: transparent;
+            border-radius: 5px;
+            width: 100%;
+            max-width: 500px;
+            padding: 20px;
+        }
+
+        .modal-content {
+            position: relative;
+            background: white;
+            border-radius: 10px;
+        }
+
+        .modal-header,
+        .modal-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .btn-close {
+            background: transparent;
+            border: none;
+            font-size: 1.5rem;
+            line-height: 1;
+            cursor: pointer;
+        }
+
+        .params-inputs {
+            display: none; /* Hide by default */
+        }
+    </style>
+
+    <!-- Scripts -->
+    <script src="{% static 'plugins/common/common.min.js' %}"></script>
+    <script src="{% static 'js/custom.min.js' %}"></script>
+    <script src="{% static 'js/settings.js' %}"></script>
+    <script src="{% static 'js/gleek.js' %}"></script>
+    <script src="{% static 'js/styleSwitcher.js' %}"></script>
+
+</body>
+
+</html>

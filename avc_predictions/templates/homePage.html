@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NeuroLab - AVC Prediction</title>
+    <style>
+        :root {
+            --main-color: #1da1f2;
+            --secondary-color: #ffffff;
+            --text-color: #030303;
+            --background-color: #f7f7f7;
+        }
+ a {
+       text-decoration: none;
+}
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--background-color);
+        }
+
+        header {
+            background: var(--main-color);
+            color: var(--secondary-color);
+            padding: 1rem 2rem;
+        }
+
+        header .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+
+        nav {
+            margin-top: 10px;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+        }
+
+        nav ul li a {
+            color: var(--secondary-color);
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .hero {
+            min-height: 80vh;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 2rem;
+            background: linear-gradient(135deg, var(--main-color), #0081ce);
+            color: var(--secondary-color);
+        }
+
+        .hero-text {
+            max-width: 50%;
+        }
+
+        .hero-text h1 {
+            font-size: 2.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero-text p {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-text a {
+            background: var(--secondary-color);
+            color: var(--main-color);
+            border: none;
+            padding: 0.8rem 1.5rem;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .cta a {
+            background: var(--secondary-color);
+            color: var(--main-color);
+            border: none;
+            padding: 0.8rem 1.5rem;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+
+
+        .models {
+            padding: 2rem;
+            background: var(--background-color);
+        }
+
+        .models h2 {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .model-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .model-card {
+            background: var(--secondary-color);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .model-card h3 {
+            margin-bottom: 1rem;
+            color: var(--main-color);
+        }
+
+        .model-card p {
+            margin-bottom: 1.5rem;
+        }
+
+        .model-card button {
+            background: var(--main-color);
+            color: var(--secondary-color);
+            border: none;
+            padding: 0.5rem 1rem;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            padding: 2rem;
+        }
+
+        .feature {
+            background: var(--secondary-color);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .feature h3 {
+            color: #1da1f2;
+            margin-bottom: 1rem;
+        }
+
+        .cta {
+            text-align: center;
+            padding: 2rem;
+            background: var(--main-color);
+            color: var(--secondary-color);
+        }
+
+        .cta h2 {
+            margin-bottom: 1rem;
+        }
+
+        footer {
+            background: #333;
+            color: var(--secondary-color);
+            text-align: center;
+            padding: 1rem;
+        }
+
+        footer a {
+            color: var(--secondary-color);
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+            <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module"></script>
+
+
+    <header style="display: flex; justify-content: space-between">
+        <div class="logo">
+                                <img src="{% static 'images/neurolab-icon.png' %}" style="filter: invert(1);margin-top: 7px;width: 220px" alt="">
+
+        </div>
+
+        <nav>
+            <ul>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#models">Models</a></li>
+                <li><a href="{% url 'page-login' %}">Login</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero" >
+        <div class="hero-text">
+            <h1>Explore Deep Learning Models Effortlessly</h1>
+            <p>Whether you are a beginner or an expert, our platform offers tools and resources for everyone to excel in the world of machine learning.</p>
+            <a href="{% url 'index' %}">Get Started</a>
+        </div>
+        <div class="hero-image" style="width: 80%;">
+            <dotlottie-player src="https://lottie.host/a6b65616-a569-446b-b6a8-3554c702a30f/pKb3z3phFw.lottie" background="transparent" speed="1.5" style="width: 100%" loop autoplay></dotlottie-player>
+        </div>
+    </section>
+
+    <section class="features" id="features">
+        <div class="feature">
+            <h3>Intuitive Interface</h3>
+            <p>Designed for users of all levels to navigate and utilize effortlessly.</p>
+        </div>
+        <div class="feature">
+            <h3>Model Library</h3>
+            <p>A vast collection of pre-trained and customizable models for your projects.</p>
+        </div>
+        <div class="feature">
+            <h3>Analytics Tools</h3>
+            <p>Visualize data and model performance with our powerful tools.</p>
+        </div>
+        <div class="feature">
+            <h3>Easy To USe</h3>
+            <p>Engage with the Interface without getting lost.</p>
+        </div>
+    </section>
+
+  <section class="models" id="models">
+    <h2>Available Models</h2>
+    <div class="model-cards">
+        <div class="model-card">
+            <h3>RNN</h3>
+            <p>Tree-based model for classification and regression.</p>
+        </div>
+
+        <div class="model-card">
+            <h3>Linear Regression</h3>
+            <p>A simple regression model to predict continuous outcomes.</p>
+        </div>
+        <div class="model-card">
+            <h3>Classification LightGBM</h3>
+            <p>Gradient boosting framework for high-performance regression tasks.</p>
+        </div>
+
+        <div class="model-card">
+            <h3>Random Forest</h3>
+            <p>Ensemble learning method using multiple decision trees.</p>
+        </div>
+
+        <div class="model-card">
+            <h3>Support Vector Machines</h3>
+            <p>Effective for high-dimensional data and regression tasks.</p>
+        </div>
+
+    </div>
+</section>
+
+    <section class="cta">
+        <h2 >Start Your AVC Analysis Now</h2>
+        <a href="{% url 'page-register' %}">Sign Up Now</a>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 NEUROLAB Platform. All rights reserved. | <a href="#">Privacy Policy</a></p>
+    </footer>
+
+    <script>
+        // Add JavaScript functionality for interactivity
+        document.querySelector('.hero-text button').addEventListener('click', () => {
+            alert('Welcome to the ML Models Platform!');
+        });
+    </script>
+</body>
+</html>

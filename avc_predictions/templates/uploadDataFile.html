@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Upload Data</title>
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'images/favicon.png' %}">
+    <!-- Custom Stylesheet -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css">
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+
+</head>
+
+<body>
+    <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module"></script>
+
+    <div id="preloader">
+        <div class="loader" style="width: 500px ; height: 500px">
+            <dotlottie-player src="https://lottie.host/5aaba2ad-18bb-48a9-bddf-dfacc58bab39/4gPgst4NZm.lottie" background="transparent" speed="1.5" style="width: 100%; height: 100%" loop autoplay></dotlottie-player>
+        </div>
+    </div>
+
+    <div id="main-wrapper"  style="height: 120vh !important;">
+
+{% include "navbar.html" %}
+
+{% include "sideBar.html" %}
+
+
+        <div class="content-body">
+
+            <div class="container-fluid">
+                <div class="row">
+                    {% include 'inputFileForm.html'%}
+                </div>
+            </div>
+            <!-- #/ container -->
+        </div>
+
+
+    </div>
+
+    <script src="{% static 'plugins/common/common.min.js' %}"></script>
+    <script src="{% static 'js/custom.min.js' %}"></script>
+    <script src="{% static 'js/settings.js' %}"></script>
+    <script src="{% static 'js/gleek.js' %}"></script>
+    <script src="{% static 'js/styleSwitcher.js' %}"></script>
+
+</body>
+
+</html>

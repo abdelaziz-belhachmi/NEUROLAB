@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Visualizations for {{ dataset.datasetCostumName }}</title>
+</head>
+<body>
+    <h1>Visualizations for Dataset: {{ dataset.datasetCostumName }}</h1>
+<div style="width: 100%;">
+    {% if data_visualizations %}
+        <ul>
+            {% for visualization in data_visualizations %}
+                <li>
+                    <h3>{{ visualization.visualization_name }}</h3>
+                    <p>Graph Type: {{ visualization.graph_type }}</p>
+                    <img src="{{ visualization.graph_file.url }}" alt="{{ visualization.visualization_name }}">
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No visualizations found for this dataset.</p>
+    {% endif %}
+</div>
+</body>
+</html>

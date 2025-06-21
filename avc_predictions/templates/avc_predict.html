@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>AVC Predict</title>
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'images/favicon.png' %}">
+    <!-- Custom Stylesheet -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css">
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+    <style>
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 16px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 24px;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            border-radius: 16px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-field {
+            background: white;
+            padding: 16px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            border: 1px solid #e2e8f0;
+        }
+
+        .form-field:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(29, 161, 242, 0.15);
+        }
+
+        .form-field label {
+            display: block;
+            font-weight: 600;
+            color: #4a5568;
+            margin-bottom: 6px;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .form-field input,
+        .form-field select {
+            width: 100%;
+            border: 2px solid #1da1f2;
+            border-radius: 8px;
+            padding: 10px 12px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            background: #f8fafc;
+        }
+
+        .form-field input:focus,
+        .form-field select:focus {
+            outline: none;
+            border-color: #1da1f2;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(29, 161, 242, 0.1);
+        }
+
+        .submit-section {
+            grid-column: 1 / -1;
+            display: flex;
+            justify-content: center;
+            margin-top: 16px;
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, #a0d8fb 0%, #1da1f2 100%);
+            color: white;
+            font-weight: 600;
+            font-size: 14px;
+            padding: 12px 32px;
+            border: none;
+            border-radius: 40px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 6px 16px rgba(29, 161, 242, 0.3);
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(29, 161, 242, 0.4);
+            background: linear-gradient(135deg, #1da1f2 0%, #0c7cd5 100%);
+        }
+
+        .form-title {
+            grid-column: 1 / -1;
+            text-align: center;
+            font-size: 28px;
+            font-weight: 700;
+            color: #2d3748;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        @media (max-width: 768px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module"></script>
+
+    <!-- Preloader start -->
+    <div id="preloader">
+        <div class="loader" style="width: 500px ; height: 500px">
+            <dotlottie-player src="https://lottie.host/a6b65616-a569-446b-b6a8-3554c702a30f/pKb3z3phFw.lottie" background="transparent" speed="1.5" style="width: 100%; height: 100%" loop autoplay></dotlottie-player>
+        </div>
+    </div>
+    <!-- Preloader end -->
+
+    <div id="main-wrapper" style="min-height: 130vh !important;">
+
+        {% include "navbar.html" %}
+        {% include "sideBar.html" %}
+
+        <div class="content-body">
+            <div class="container-fluid">
+
+                <form action="{% url 'Prediction' %}" method="post" class="form-grid">
+                    {% csrf_token %}
+
+                    <h2 class="form-title">Predict Stroke</h2>
+
+                    <div class="form-field">
+                        <label for="gender">Gender</label>
+                        <select name="gender" required>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+
+                    <div class="form-field">
+                        <label for="age">Age</label>
+                        <input type="number" name="age" step="0.1" required />
+                    </div>
+
+                    <div class="form-field">
+                        <label for="hypertension">Hypertension</label>
+                        <select name="hypertension" required>
+                            <option value="1">Yes</option>
+                            <option value="0">No</option>
+                        </select>
+                    </div>
+
+                    <div class="form-field">
+                        <label for="heart_disease">Heart Disease</label>
+                        <select name="heart_disease" required>
+                            <option value="1">Yes</option>
+                            <option value="0">No</option>
+                        </select>
+                    </div>
+
+                    <div class="form-field">
+                        <label for="ever_married">Ever Married</label>
+                        <select name="ever_married" required>
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                        </select>
+                    </div>
+
+                    <div class="form-field">
+                        <label for="work_type">Work Type</label>
+                        <select name="work_type" required>
+                            <option value="Private">Private</option>
+                            <option value="Self-employed">Self-employed</option>
+                            <option value="Govt_job">Govt_job</option>
+                            <option value="children">children</option>
+                            <option value="Never_worked">Never_worked</option>
+                        </select>
+                    </div>
+
+                    <div class="form-field">
+                        <label for="Residence_type">Residence Type</label>
+                        <select name="Residence_type" required>
+                            <option value="Urban">Urban</option>
+                            <option value="Rural">Rural</option>
+                        </select>
+                    </div>
+
+                    <div class="form-field">
+                        <label for="avg_glucose_level">Average Glucose Level</label>
+                        <input type="number" step="0.01" name="avg_glucose_level" required />
+                    </div>
+
+                    <div class="form-field">
+                        <label for="bmi">BMI</label>
+                        <input type="number" step="0.1" name="bmi" required />
+                    </div>
+
+                    <div class="form-field">
+                        <label for="smoking_status">Smoking Status</label>
+                        <select name="smoking_status" required>
+                            <option value="never smoked">never smoked</option>
+                            <option value="formerly smoked">formerly smoked</option>
+                            <option value="smokes">smokes</option>
+                            <option value="Unknown">Unknown</option>
+                        </select>
+                    </div>
+
+                    <div class="submit-section">
+                        <button type="submit" class="submit-btn">
+                            Predict
+                        </button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+
+    </div>
+
+     <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Select all forms on the page
+        const forms = document.querySelectorAll("form");
+
+        forms.forEach(function (form) {
+            form.addEventListener("submit", function (e) {
+                e.preventDefault(); // optional: prevent actual submission if needed
+                const model = form.getAttribute("action");
+                console.log(`🚀 Training model via: ${model}`);
+
+                // Optional: Show loader or toast
+                document.getElementById("preloader").style.display = "block";
+
+                // Then optionally submit manually
+                form.submit();
+            });
+        });
+    });
+</script>
+
+    <!-- Scripts -->
+    <script src="{% static 'plugins/common/common.min.js' %}"></script>
+    <script src="{% static 'js/custom.min.js' %}"></script>
+    <script src="{% static 'js/settings.js' %}"></script>
+    <script src="{% static 'js/gleek.js' %}"></script>
+    <script src="{% static 'js/styleSwitcher.js' %}"></script>
+
+</body>
+
+</html>

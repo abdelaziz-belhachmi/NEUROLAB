@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Risk Score</title>
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'images/favicon.png' %}">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css">
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+</head>
+
+<body>
+
+
+    <div id="preloader" >
+        <div class="loader" style="width: 500px ; height: 500px">
+            <dotlottie-player src="https://lottie.host/8e8f78fc-080e-4038-b60e-28d2d74c17fb/yQDl0QtohN.lottie" background="transparent" speed="1.5" style="width: 100%; height: 100%"  loop autoplay></dotlottie-player>
+        </div>
+    </div>
+
+
+    <div id="main-wrapper" style="min-height: 130vh !important;">
+        {% include "navbar.html" %}
+        {% include "sideBar.html" %}
+
+        <div class="content-body">
+            <div class="container-fluid">
+                <h3 style="padding: 10px"> </h3>
+                <div class="row">
+
+                    <div class="col-3">
+                        <div class="card bg-twitter shadow-lg">
+                            <div class="card-body ">
+                                <div class="text-center ">
+                                    <span class="display-5">
+                                        <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100" viewBox="0 0 50 50">
+                                            <g fill="#ffffff">
+                                                <path d="M49.726,25.312l-18-19c-0.003-0.003-0.007-0.004-0.01-0.007c-0.074-0.076-0.165-0.133-0.26-0.182	c-0.022-0.011-0.038-0.031-0.061-0.041c-0.074-0.032-0.158-0.038-0.24-0.051C31.105,6.023,31.06,6,31.009,6	c-0.001,0-0.003,0.001-0.005,0.001C31.003,6.001,31.001,6,31,6H19.148c-0.026,0-0.048,0.013-0.074,0.015C19.049,6.013,19.026,6,19,6	c-0.002,0-0.005,0-0.007,0c-0.272,0.002-0.532,0.114-0.719,0.312L0.294,25.292c-0.001,0.001-0.001,0.001-0.002,0.002l-0.017,0.018	c-0.038,0.041-0.056,0.091-0.086,0.136c-0.039,0.058-0.085,0.11-0.112,0.176c-0.098,0.241-0.098,0.51,0,0.751	c0.027,0.066,0.073,0.118,0.112,0.176c0.03,0.045,0.048,0.095,0.086,0.136l0.017,0.018c0.001,0.001,0.001,0.001,0.002,0.002	l17.98,18.979c0.188,0.2,0.451,0.354,0.726,0.312c0.026,0,0.049-0.013,0.074-0.015C19.1,45.987,19.122,46,19.148,46H30.78	c0.039,0,0.072-0.018,0.11-0.022C30.928,45.982,30.962,46,31,46c0.002,0,0.005,0,0.007,0c0.272-0.002,0.532-0.114,0.719-0.312l18-19	C50.092,26.302,50.092,25.698,49.726,25.312z M46.675,25H37.95L26.375,13.131l4.611-4.69L46.675,25z M36.023,25.888	c-0.003,0.029-0.016,0.054-0.017,0.083L24.973,37.383L13.801,25.921l11.172-11.364L36.023,25.888z M28.615,8l-3.636,3.698L21.372,8	H28.615z M19.011,8.443l4.565,4.682L11.902,25H3.325L19.011,8.443z M19.008,43.554L3.325,27H12c0.018,0,0.032-0.009,0.05-0.01	l11.532,11.832L19.008,43.554z M21.358,44l3.621-3.745L28.629,44H21.358z M30.99,43.557l-4.621-4.741L37.793,27h8.882L30.99,43.557z"></path>
+                                            </g>
+                                        </svg>
+                                    </span>
+                                    <h2 class="mt-1" style="color: white">RNN</h2>
+                                    <p style="color: white">Deep Learning</p>
+                                    <button class="btn gradient-10 btn-md border-0 btn-rounded px-5"
+                                            onclick="openModal(this)">
+                                        Train
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-3">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="text-center">
+                                    <span class="display-5">
+                                        <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100" viewBox="0 0 50 50">
+                                                <path d="M49.726,25.312l-18-19c-0.003-0.003-0.007-0.004-0.01-0.007c-0.074-0.076-0.165-0.133-0.26-0.182	c-0.022-0.011-0.038-0.031-0.061-0.041c-0.074-0.032-0.158-0.038-0.24-0.051C31.105,6.023,31.06,6,31.009,6	c-0.001,0-0.003,0.001-0.005,0.001C31.003,6.001,31.001,6,31,6H19.148c-0.026,0-0.048,0.013-0.074,0.015C19.049,6.013,19.026,6,19,6	c-0.002,0-0.005,0-0.007,0c-0.272,0.002-0.532,0.114-0.719,0.312L0.294,25.292c-0.001,0.001-0.001,0.001-0.002,0.002l-0.017,0.018	c-0.038,0.041-0.056,0.091-0.086,0.136c-0.039,0.058-0.085,0.11-0.112,0.176c-0.098,0.241-0.098,0.51,0,0.751	c0.027,0.066,0.073,0.118,0.112,0.176c0.03,0.045,0.048,0.095,0.086,0.136l0.017,0.018c0.001,0.001,0.001,0.001,0.002,0.002	l17.98,18.979c0.188,0.2,0.451,0.354,0.726,0.312c0.026,0,0.049-0.013,0.074-0.015C19.1,45.987,19.122,46,19.148,46H30.78	c0.039,0,0.072-0.018,0.11-0.022C30.928,45.982,30.962,46,31,46c0.002,0,0.005,0,0.007,0c0.272-0.002,0.532-0.114,0.719-0.312l18-19	C50.092,26.302,50.092,25.698,49.726,25.312z M46.675,25H37.95L26.375,13.131l4.611-4.69L46.675,25z M36.023,25.888	c-0.003,0.029-0.016,0.054-0.017,0.083L24.973,37.383L13.801,25.921l11.172-11.364L36.023,25.888z M28.615,8l-3.636,3.698L21.372,8	H28.615z M19.011,8.443l4.565,4.682L11.902,25H3.325L19.011,8.443z M19.008,43.554L3.325,27H12c0.018,0,0.032-0.009,0.05-0.01	l11.532,11.832L19.008,43.554z M21.358,44l3.621-3.745L28.629,44H21.358z M30.99,43.557l-4.621-4.741L37.793,27h8.882L30.99,43.557z"></path>
+                                        </svg>
+                                    </span>
+                                    <h2 class="mt-1">Logistic Regression</h2>
+                                    <p>Regression</p>
+                                    <button class="btn gradient-7 btn-md border-0 btn-rounded px-5"
+                                            onclick="openModal(this)">
+                                        Train
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <div class="col-3 ">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="text-center">
+                                    <span class="display-5">
+                                        <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100" viewBox="0 0 50 50">
+                                                <path d="M49.726,25.312l-18-19c-0.003-0.003-0.007-0.004-0.01-0.007c-0.074-0.076-0.165-0.133-0.26-0.182	c-0.022-0.011-0.038-0.031-0.061-0.041c-0.074-0.032-0.158-0.038-0.24-0.051C31.105,6.023,31.06,6,31.009,6	c-0.001,0-0.003,0.001-0.005,0.001C31.003,6.001,31.001,6,31,6H19.148c-0.026,0-0.048,0.013-0.074,0.015C19.049,6.013,19.026,6,19,6	c-0.002,0-0.005,0-0.007,0c-0.272,0.002-0.532,0.114-0.719,0.312L0.294,25.292c-0.001,0.001-0.001,0.001-0.002,0.002l-0.017,0.018	c-0.038,0.041-0.056,0.091-0.086,0.136c-0.039,0.058-0.085,0.11-0.112,0.176c-0.098,0.241-0.098,0.51,0,0.751	c0.027,0.066,0.073,0.118,0.112,0.176c0.03,0.045,0.048,0.095,0.086,0.136l0.017,0.018c0.001,0.001,0.001,0.001,0.002,0.002	l17.98,18.979c0.188,0.2,0.451,0.354,0.726,0.312c0.026,0,0.049-0.013,0.074-0.015C19.1,45.987,19.122,46,19.148,46H30.78	c0.039,0,0.072-0.018,0.11-0.022C30.928,45.982,30.962,46,31,46c0.002,0,0.005,0,0.007,0c0.272-0.002,0.532-0.114,0.719-0.312l18-19	C50.092,26.302,50.092,25.698,49.726,25.312z M46.675,25H37.95L26.375,13.131l4.611-4.69L46.675,25z M36.023,25.888	c-0.003,0.029-0.016,0.054-0.017,0.083L24.973,37.383L13.801,25.921l11.172-11.364L36.023,25.888z M28.615,8l-3.636,3.698L21.372,8	H28.615z M19.011,8.443l4.565,4.682L11.902,25H3.325L19.011,8.443z M19.008,43.554L3.325,27H12c0.018,0,0.032-0.009,0.05-0.01	l11.532,11.832L19.008,43.554z M21.358,44l3.621-3.745L28.629,44H21.358z M30.99,43.557l-4.621-4.741L37.793,27h8.882L30.99,43.557z"></path>
+                                        </svg>
+                                    </span>
+                                    <h2 class="mt-1">Random Forest</h2>
+                                    <p>Regression</p>
+                                    <button class="btn gradient-7 btn-md border-0 btn-rounded px-5"
+                                    onclick="openModal(this)">
+                                    Train
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-3 ">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="text-center">
+                                    <span class="display-5">
+                                        <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100" viewBox="0 0 50 50">
+                                                <path d="M49.726,25.312l-18-19c-0.003-0.003-0.007-0.004-0.01-0.007c-0.074-0.076-0.165-0.133-0.26-0.182	c-0.022-0.011-0.038-0.031-0.061-0.041c-0.074-0.032-0.158-0.038-0.24-0.051C31.105,6.023,31.06,6,31.009,6	c-0.001,0-0.003,0.001-0.005,0.001C31.003,6.001,31.001,6,31,6H19.148c-0.026,0-0.048,0.013-0.074,0.015C19.049,6.013,19.026,6,19,6	c-0.002,0-0.005,0-0.007,0c-0.272,0.002-0.532,0.114-0.719,0.312L0.294,25.292c-0.001,0.001-0.001,0.001-0.002,0.002l-0.017,0.018	c-0.038,0.041-0.056,0.091-0.086,0.136c-0.039,0.058-0.085,0.11-0.112,0.176c-0.098,0.241-0.098,0.51,0,0.751	c0.027,0.066,0.073,0.118,0.112,0.176c0.03,0.045,0.048,0.095,0.086,0.136l0.017,0.018c0.001,0.001,0.001,0.001,0.002,0.002	l17.98,18.979c0.188,0.2,0.451,0.354,0.726,0.312c0.026,0,0.049-0.013,0.074-0.015C19.1,45.987,19.122,46,19.148,46H30.78	c0.039,0,0.072-0.018,0.11-0.022C30.928,45.982,30.962,46,31,46c0.002,0,0.005,0,0.007,0c0.272-0.002,0.532-0.114,0.719-0.312l18-19	C50.092,26.302,50.092,25.698,49.726,25.312z M46.675,25H37.95L26.375,13.131l4.611-4.69L46.675,25z M36.023,25.888	c-0.003,0.029-0.016,0.054-0.017,0.083L24.973,37.383L13.801,25.921l11.172-11.364L36.023,25.888z M28.615,8l-3.636,3.698L21.372,8	H28.615z M19.011,8.443l4.565,4.682L11.902,25H3.325L19.011,8.443z M19.008,43.554L3.325,27H12c0.018,0,0.032-0.009,0.05-0.01	l11.532,11.832L19.008,43.554z M21.358,44l3.621-3.745L28.629,44H21.358z M30.99,43.557l-4.621-4.741L37.793,27h8.882L30.99,43.557z"></path>
+                                        </svg>
+                                    </span>
+                                    <h2 class="mt-1">Support Vector Machines (SVR)</h2>
+                                    <p>Regression</p>
+                                    <button class="btn gradient-7 btn-md border-0 btn-rounded px-5"
+                                    onclick="openModal(this)">
+                                    Train
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+                </div>
+            </div>
+        </div>
+
+        {% include "footer.html" %}
+    </div>
+
+    <!-- Modal -->
+    <div class="modal" id="trainModal" style="display: none;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="trainModalLabel">Train Model</h5>
+                    <button type="button" class="btn-close" onclick="closeModal()">×</button>
+                </div>
+                <div class="modal-body">
+                    <form id="trainForm">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="modelName" class="form-label">Model</label>
+                            <input type="text" class="form-control" id="modelName" readonly>
+                        </div>
+                        <div class="mb-3">
+                            <label for="ChosentrainingFile" class="form-label">Select Training Dataset</label>
+                            <select style="width: 100% ; padding: 6px" name="ChosentrainingFile" id="ChosentrainingFile">
+                                {% for file in processeddatasets %}
+                                    {% if file.raw_dataset.TargetColumn %}
+                                        <option value="{{file.id}}">{{file.raw_dataset.datasetCostumName}}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            </select>
+                        </div>
+
+<!--                         Hyperparameter Tuning Type (manual or automatic) -->
+                        <div class="mb-3"  style="display: none">
+                            <label for="tuningType" class="form-label">Hyperparameter Tuning</label>
+                            <select id="tuningType" class="form-control" onchange="toggleHyperparameters()">
+                                <option value="auto">Automatic</option>
+                                <option value="manual">Manual</option>
+                            </select>
+                        </div>
+
+                        <!-- Manual Hyperparameters Inputs (hidden by default) -->
+                        <div id="manualParams" style="display: none;">
+                            <div id="modelParams"></div> <!-- Dynamic params will be injected here -->
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="closeModal()">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="startTraining()">Start Training</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .modal-dialog {
+            background: transparent;
+            border-radius: 5px;
+            width: 100%;
+            max-width: 500px;
+            padding: 20px;
+        }
+        .modal-content {
+            position: relative;
+            background: white;
+            border-radius: 10px;
+        }
+        .modal-header, .modal-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .btn-close {
+            background: transparent;
+            border: none;
+            font-size: 1.5rem;
+            line-height: 1;
+            cursor: pointer;
+        }
+    </style>
+
+    <script>
+
+
+        const hyperparameterOptions = {
+
+    "AutoML": [
+        { name: "max_runtime_secs", label: "Max Trainig Time (sec)", type: "number", default: 30, step: 1 },
+        { name: "max_models", label: "Number of Models to train", type: "number", default: 3, step: 1 }
+    ],
+
+    "Linear Regression": [
+        { name: "n_jobs", label: "Number of Jobs", type: "number", default: 5, step: 1 }
+    ],
+    "Decision Trees": [
+        { name: "max_depth", label: "Max Depth", type: "number", default: 5 },
+        { name: "min_samples_split", label: "Min Samples Split", type: "number", default: 2 },
+        { name: "min_samples_leaf", label: "Min Samples Leaf", type: "number", default: 1 }
+    ],
+    "Random Forest": [
+        { name: "n_estimators", label: "Number of Estimators", type: "number", default: 100 },
+        { name: "max_depth", label: "Max Depth", type: "number", default: 5 },
+        { name: "min_samples_split", label: "Min Samples Split", type: "number", default: 2 },
+        { name: "min_samples_leaf", label: "Min Samples Leaf", type: "number", default: 1 }
+    ],
+    "XGBoost": [
+        { name: "learning_rate", label: "Learning Rate", type: "number", default: 0.1, step: 0.01 },
+        { name: "max_depth", label: "Max Depth", type: "number", default: 6 },
+        { name: "n_estimators", label: "Number of Estimators", type: "number", default: 100 }
+    ],
+    "Support Vector Machines (SVR)": [
+        { name: "C", label: "Regularization Parameter (C)", type: "number", default: 1 },
+        { name: "epsilon", label: "Epsilon", type: "number", default: 0.1 },
+        { name: "kernel", label: "Kernel", type: "text", default: "rbf" }
+    ],
+    "K-Nearest Neighbors": [
+        { name: "n_neighbors", label: "Number of Neighbors", type: "number", default: 5 },
+        { name: "weights", label: "Weights", type: "text", default: "uniform" },
+        { name: "metric", label: "Distance Metric", type: "text", default: "minkowski" }
+    ],
+    "Reseau Neuron": [
+        { name: "hidden_layer_sizes", label: "Hidden Layer Sizes", type: "text", default: "100" },
+        { name: "activation", label: "Activation Function", type: "text", default: "relu" },
+        { name: "solver", label: "Solver", type: "text", default: "adam" }
+    ],
+    "LightGBM": [
+        { name: "learningRate", label: "Learning Rate", type: "number", default: 0.01, step: 0.01 },
+        { name: "numLeaves", label: "Number of Leaves", type: "number", default: 31 },
+        { name: "featureFraction", label: "Feature Fraction", type: "number", default: 0.9, step: 0.01 }
+    ]
+};
+
+        function openModal(clickedmodel) {
+            modelNameElement = clickedmodel.parentNode.querySelector('h2');
+            document.getElementById('modelName').value = modelNameElement.innerText;
+            const modal = document.getElementById('trainModal');
+            modal.style.display = 'flex'; // Show modal
+            showModelParams(modelNameElement.innerText);
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('trainModal');
+            modal.style.display = 'none'; // Hide modal
+        }
+
+        function toggleHyperparameters() {
+            const tuningType = document.getElementById('tuningType').value;
+            const manualParams = document.getElementById('manualParams');
+
+            if (tuningType === 'manual') {
+                manualParams.style.display = 'block';
+            } else {
+                manualParams.style.display = 'none';
+            }
+        }
+
+        function showModelParams(modelName) {
+            const modelParamsDiv = document.getElementById('modelParams');
+            modelParamsDiv.innerHTML = ''; // Clear existing inputs
+
+            if (hyperparameterOptions[modelName]) {
+                hyperparameterOptions[modelName].forEach(param => {
+                    const paramDiv = document.createElement('div');
+                    paramDiv.classList.add('mb-3');
+
+                    const label = document.createElement('label');
+                    label.setAttribute('for', param.name);
+                    label.classList.add('form-label');
+                    label.innerText = param.label;
+
+                    const input = document.createElement('input');
+                    input.type = param.type;
+                    input.classList.add('form-control');
+                    input.id = param.name;
+                    input.name = param.name;
+                    input.value = param.default || '';
+                    if (param.step) input.step = param.step;
+
+                    paramDiv.appendChild(label);
+                    paramDiv.appendChild(input);
+                    modelParamsDiv.appendChild(paramDiv);
+                });
+            }
+        }
+
+        function startTraining() {
+            modelName = document.getElementById("modelName").value;
+            if (modelName === 'LightGBM'){
+                modelName = "Regression LightGBM"
+            }
+
+            // Get the selected dataset ID and model name from the DOM
+            const fileId = document.getElementById('ChosentrainingFile').value;
+
+            if (!fileId){
+               alert('Please select a file to train.');
+               return;
+            }
+
+            const params = {
+                auto: document.getElementById("tuningType").value === "manual" ? 'false' : 'true',
+            };
+
+            const selectedModelParams = hyperparameterOptions[document.getElementById("modelName").value];
+            if (selectedModelParams) {
+                selectedModelParams.forEach(param => {
+                    const input = document.getElementById(param.name);
+                    if (input) {
+                        params[param.name] = input.value;
+                    }
+                });
+            }
+
+            // Creating the form dynamically and submitting it
+            const form = document.createElement("form");
+            const csrfInput = document.createElement("input");
+            csrfInput.type = "hidden";
+            csrfInput.name = "csrfmiddlewaretoken";
+            csrfInput.value = "{{ csrf_token }}";
+            form.appendChild(csrfInput);
+
+            // Add the hidden input for the params
+            const paramsInput = document.createElement("input");
+            paramsInput.type = "hidden";
+            paramsInput.name = "params";
+            paramsInput.value = JSON.stringify(params);
+            form.appendChild(paramsInput);
+
+            // Append the form to the document
+            document.body.appendChild(form);
+
+            // Set the URL and submit the form
+            const url = `/train_model/${modelName}/${fileId}/supervised/`;
+            form.method = "POST";
+            form.action = url;
+            form.submit();
+
+            // Close the modal (optional)
+            closeModal();
+
+            // Start the preloader animation
+            const preloader = document.getElementById("preloader");
+            preloader.style.display = "block";
+        }
+    </script>
+
+    <script src="{% static 'plugins/common/common.min.js' %}"></script>
+    <script src="{% static 'js/custom.min.js' %}"></script>
+    <script src="{% static 'js/settings.js' %}"></script>
+    <script src="{% static 'js/gleek.js' %}"></script>
+    <script src="{% static 'js/styleSwitcher.js' %}"></script>
+<script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module"></script>
+
+</body>
+
+
+</html>

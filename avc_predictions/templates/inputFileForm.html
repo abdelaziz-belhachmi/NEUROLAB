@@ -1,0 +1,463 @@
+  {% load static %}
+
+  <style>
+    
+
+    * {
+      box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      -webkit-box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+    }
+
+    .wrapper {
+      margin: auto;
+      max-width: 640px;
+      padding-top: 60px;
+      text-align: center;
+    }
+
+    .container {
+      background-color: #1da1f2;
+      padding: 20px;
+      border-radius: 10px;
+    }
+
+    h1 {
+      color: #ffffff;
+      font-family: 'Varela Round', sans-serif;
+      letter-spacing: -.5px;
+      font-weight: 700;
+      padding-bottom: 10px;
+    }
+
+    .upload-container {
+      background-color: rgb(239, 239, 239);
+      border-radius: 6px;
+      padding: 10px;
+    }
+
+    .border-container {
+      border: 5px dashed rgba(198, 198, 198, 0.65);
+      padding: 20px;
+    }
+
+    .border-container p {
+      color: #130f40;
+      font-weight: 600;
+      font-size: 1.1em;
+      letter-spacing: -1px;
+      margin-top: 30px;
+      margin-bottom: 0;
+      opacity: 0.65;
+    }
+
+    #file-browser {
+      text-decoration: none;
+      color: rgb(22,42,255);
+      border-bottom: 3px dotted rgba(22, 22, 255, 0.85);
+    }
+
+    #file-browser:hover {
+      color: rgb(0, 0, 255);
+      border-bottom: 3px dotted rgba(0, 0, 255, 0.85);
+    }
+
+    .modal {
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0, 0, 0, 0.4);
+    }
+
+    .modal-content {
+      background-color: #fefefe;
+      margin: 15% auto;
+      padding: 20px;
+      border: 1px solid #888;
+      width: 50%;
+      border-radius: 10px;
+      text-align: left;
+    }
+
+    .close-btn {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .close-btn:hover,
+    .close-btn:focus {
+      color: #1da1f2;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .form-group {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .form-group label {
+        flex: 1;
+        text-align: left;
+        margin-right: 10px;
+    }
+
+    .form-group input,
+    .form-group select {
+        flex: 2;
+        padding: 5px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+
+    .form-group button {
+        margin-left: 10px;
+        padding: 5px 15px;
+        background-color: #1da1f2;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    .form-group button:hover {
+        background-color: #1da1f2;
+    }
+
+    #buttonSubmit,
+    #buttonUploadWithoutPreprocessing {
+      margin: 10px;
+      padding: 5px 15px;
+      background-color: #1da1f2;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      width:40%;
+      /*align-self: center;*/
+    }
+
+    .drag-over {
+    border: 2px dashed #1da1f2;
+    background-color: #d4c7f8; /* Darker shade to indicate file drag */
+    transition: background-color 0.3s ease; /* Smooth transition */
+}
+
+  </style>
+
+
+
+
+  <div class="wrapper">
+    <div class="container">
+        <h1>Upload a Dataset</h1>
+        <div class="upload-container">
+            <div class="border-container" id="drop-zone">
+                <div class="icons fa-4x">
+                    <i class="fas fa-file-image" data-fa-transform="shrink-3 down-2 left-6 rotate--45"></i>
+                    <i class="fas fa-file-alt" data-fa-transform="shrink-2 up-4"></i>
+                    <i class="fas fa-file-pdf" data-fa-transform="shrink-3 down-2 right-6 rotate-45"></i>
+                </div>
+                <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+
+                <input type="file" style="display: none" id="file-upload" accept=".csv, .xlsx, .xls">
+                <p>Drag and drop files here, or <a onclick="uploadFile()" id="file-browser">browse</a> your computer.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+  <div id="modal" class="modal" style="display: none;">
+
+      <div class="modal-content">
+      <span class="close-btn" onclick="closeModal()">×</span>
+      <h2>Dataset Details</h2>
+      <br><br>
+
+      <form id="target-column-form" method="POST" enctype="multipart/form-data">
+        <div class="form-group">
+          <label for="custom-name">Dataset Name:</label>
+          <input style="padding:5px 60px;" type="text" id="custom-name" name="custom-name" required>
+        </div>
+
+        <div class="form-group">
+          <label for="learning-type">Learning Type:</label>
+          <label><input type="radio" name="learning-type" value="supervised" required checked> Supervised</label>
+          <label><input type="radio" name="learning-type" value="unsupervised" required> Unsupervised</label>
+        </div>
+
+       <div class="form-group">
+          <label for="visibility">Data Visibility:</label>
+          <label><input type="radio" name="visibility" value="Private" required checked> Private</label>
+          <label><input type="radio" name="visibility" value="Public" required> Public</label>
+        </div>
+
+        <div class="form-group">
+          <label for="target-column">Target Column:</label>
+          <input type="text" id="target-column" name="target-column" required>
+          <br><br>
+          <button type="button" id="buttonCheck" onclick="checkTarget()">Check Target</button>
+        </div>
+      </form>
+
+      <br>
+          <div style="display: flex;justify-content: center">
+            <button id="buttonSubmit" type="submit" onclick="submitForm(false)">Upload and Preprocess</button>
+            <button id="buttonUploadWithoutPreprocessing" type="submit" onclick="submitForm(true)">Upload Without Preprocessing</button>
+          </div>
+
+    </div>
+  </div>
+
+
+  <div id="preloader" style="display: none;">
+    <div class="loader">
+      <p>Please wait, your data is preprocessing...</p>
+      <svg class="circular" viewBox="25 25 50 50">
+        <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="3" stroke-miterlimit="10"></circle>
+      </svg>
+    </div>
+  </div>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+<script>
+let columns = [];
+
+const dropZone = document.getElementById('drop-zone');
+const fileInput = document.getElementById('file-upload');
+
+// Function to handle file upload when browsing
+function uploadFile() {
+    fileInput.click();
+}
+
+// Add drag-and-drop functionality
+dropZone.addEventListener('dragenter', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    dropZone.classList.add('drag-over');
+});
+
+dropZone.addEventListener('dragover', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    dropZone.classList.add('drag-over');
+});
+
+dropZone.addEventListener('dragleave', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    dropZone.classList.remove('drag-over');
+});
+
+dropZone.addEventListener('drop', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    dropZone.classList.remove('drag-over');
+
+    const files = e.dataTransfer.files;
+    if (files.length) {
+        fileInput.files = files; // Assign files to the input element
+        console.log('Files uploaded:', files[0]); // Handle file processing logic here
+        ReadFileColumns()
+    }
+});
+
+
+document.getElementById('file-upload').addEventListener('change', ReadFileColumns);
+
+    function ReadFileColumns() {
+      const fileInput = document.getElementById('file-upload');
+      const file = fileInput.files[0];
+
+      if (!file) {
+        alert('Please upload a valid file.');
+        return;
+      }
+
+      const fileType = file.type;
+      if (fileType === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' || 
+          fileType === 'application/vnd.ms-excel') {
+
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          const data = new Uint8Array(e.target.result);
+          const workbook = XLSX.read(data, { type: 'array' });
+          const firstSheetName = workbook.SheetNames[0];
+          const worksheet = workbook.Sheets[firstSheetName];
+          const jsonSheet = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+          columns = jsonSheet[0];
+          if (columns.length > 0) {
+            showModal(columns);
+          } else {
+            alert('No valid columns found. Please check your file.');
+          }
+        };
+        reader.readAsArrayBuffer(file);
+
+      } else if (fileType === 'text/csv') {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          const content = e.target.result;
+          columns = parseCSV(content);
+          if (columns.length > 0) {
+            showModal(columns);
+          } else {
+            alert('No valid columns found. Please check your file.');
+          }
+        };
+        reader.readAsText(file, 'ISO-8859-1');
+      } else {
+        alert('Invalid file type. Please upload a CSV or Excel file.');
+      }
+    }
+
+    function parseCSV(content) {
+      const rows = content.split('\n').filter(row => row.trim() !== '');
+      if (rows.length > 0) {
+        return rows[0].split(',').map(col => col.trim());
+      }
+      return [];
+    }
+
+    function showModal(columns) {
+      const modal = document.getElementById('modal');
+      modal.style.display = 'block';
+    }
+
+    function closeModal() {
+      const modal = document.getElementById('modal');
+      modal.style.display = 'none';
+    }
+
+    function checkTarget() {
+      const targetColumn = document.getElementById('target-column').value.trim();
+      if (columns.includes(targetColumn)) {
+        alert(`Target column "${targetColumn}" exists.`);
+      } else {
+        alert('Target column does not exist. Please enter another.');
+      }
+    }
+function submitForm(skipPreprocessing) {
+  const customName = document.getElementById('custom-name').value.trim();
+  const targetColumn = document.getElementById('target-column').value.trim();
+  const fileInput = document.getElementById('file-upload');
+  const file = fileInput.files[0];
+  const learningType = document.querySelector('input[name="learning-type"]:checked');
+  const visibility = document.querySelector('input[name="visibility"]:checked');
+
+  if (!customName || !file || !learningType) {
+    alert('Please fill all fields and upload a file.');
+    return;
+  }
+
+  if (learningType.value === 'supervised' && !targetColumn) {
+    alert('Please provide a target column for supervised learning.');
+    return;
+  }
+
+  if (learningType.value === 'supervised' && !columns.includes(targetColumn)) {
+    alert('Invalid target column. Please check.');
+    return;
+  }
+
+  const formData = new FormData();
+  formData.append('file', file);
+  formData.append('custom_name', customName);
+  formData.append('target_column', targetColumn);
+  formData.append('learning_type', learningType.value);
+  formData.append('skip_preprocessing', skipPreprocessing); // New field
+  formData.append('visibility', visibility.value); // New field
+
+  // Show the preloader
+  const preloader = document.getElementById('preloader');
+  preloader.style.display = 'block';
+  
+
+  fetch('', {
+    method: 'POST',
+    body: formData,
+    headers: {
+      'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value,
+    },
+  })
+    .then(response => response.json())
+    .then(data => {
+      // Hide the preloader after the request is complete
+      preloader.style.display = 'none';
+
+      closeModal()
+
+      if (data.error) {
+        alert(data.error);
+
+      } else {
+    toastr.success(data.message, "Success", {
+        timeOut: 3000,  // Show toast for 3 seconds
+        onHidden: function() {
+            window.location.href = data.preprocessing_url;
+        }
+    });
+}
+
+    })
+    .catch(error => {
+        console.log('err :'+error)
+      // Hide the preloader and show error if there's an issue
+      // preloader.style.display = 'none';
+      // alert('An error occurred while uploading the file.');
+    });
+}
+
+
+
+    // Event listener for radio buttons to toggle visibility and requirements
+    document.querySelectorAll('input[name="learning-type"]').forEach(radio => {
+      radio.addEventListener('change', toggleTargetColumn);
+    });
+
+    function toggleTargetColumn() {
+      const learningType = document.querySelector('input[name="learning-type"]:checked').value;
+      const targetColumnInput = document.getElementById('target-column');
+      const targetColumnLabel = document.querySelector('label[for="target-column"]');
+      const targetButton=document.getElementById('buttonCheck')
+
+      if (learningType === 'unsupervised') {
+        targetColumnInput.style.display = 'none';
+        targetColumnLabel.style.display = 'none';
+        targetButton.style.display='none';
+        targetColumnInput.required = false;  // Make the target column not required
+
+      } else {
+        targetColumnInput.style.display = 'block';
+        targetColumnLabel.style.display = 'block';
+        targetButton.style.display='block';
+        targetColumnInput.required = true;  // Make the target column required for supervised learning
+      }
+    }
+
+    toggleTargetColumn();  
+  </script>
+
+  <script src="{% static 'plugins/common/common.min.js' %}"></script>
+  <script src="{% static 'js/custom.min.js' %}"></script>
+  <script src="{% static 'js/settings.js' %}"></script>
+  <script src="{% static 'js/gleek.js' %}"></script>
+  <script src="{% static 'js/styleSwitcher.js' %}"></script>

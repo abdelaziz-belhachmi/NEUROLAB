@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Uploaded Files</title>
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'images/favicon.png' %}">
+    <!-- Custom Stylesheet -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css">
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+</head>
+
+<body>
+
+    <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module"></script>
+
+    <!-- Preloader start -->
+    <div id="preloader">
+        <div class="loader" style="width: 500px ; height: 500px">
+            <dotlottie-player src="https://lottie.host/a6b65616-a569-446b-b6a8-3554c702a30f/pKb3z3phFw.lottie" background="transparent" speed="1.5" style="width: 100%; height: 100%" loop autoplay></dotlottie-player>
+        </div>
+    </div>
+    <!-- Preloader end -->
+
+    <div id="main-wrapper" style="min-height: 130vh !important;">
+
+        {% include "navbar.html" %}
+        {% include "sideBar.html" %}
+
+        <div class="content-body">
+            <div class="container-fluid">
+
+                <!-- Processed Datasets Section -->
+                <h3 style="padding: 10px">Pre-Processed DataSets</h3>
+                <div class="row processed-datasets">
+                   {% for file in processeddatasets %}
+                   <div class="col-md-3 col-sm-6 dataset-item">
+                        <div class="card">
+                            {% if file.raw_dataset.utilisateur == user %}
+                                    <a class=" btn btn-danger btn-sm border-0 btn-rounded mt-2 ml-2 px-5" style="width: 27px;height: 27px" href="{% url 'deleteData' prepdataID=file.id %}">
+                                            <i class="fa fa-times" aria-hidden="true"></i>
+                                    </a>
+                            {% endif %}
+                            <div class="card-body">
+
+                                <div class="text-center">
+                                    <span class="display-5" style="margin-left: -15px;padding-bottom: 15px">
+                                        <img width="80" height="80" src="https://img.icons8.com/external-smashingstocks-mixed-smashing-stocks/80/external-Dataset-web-hosting-smashingstocks-mixed-smashing-stocks.png" alt="external-Dataset-web-hosting-smashingstocks-mixed-smashing-stocks"/>
+                                    </span>
+                                    <h4 style="margin-top: 30px" title="{{ file.preprocessedCostumName }}">{{ file.preprocessedCostumName }}</h4>
+                                    <p>Processed: {{ file.processed_at }}</p>
+
+                                <div>
+
+                                    <button class="btn gradient-7 btn-md border-0 btn-rounded px-5" onclick="visualizeprepData({{ file.id }})">
+                                        Visualise
+                                    </button>
+
+                                    <a class="btn gradient-7 btn-sm border-0 btn-rounded ml-3 px-5" href="{% url 'downloadPreproccesseddata' prepdataID=file.id %}">
+                                            <i class="fa fa-download" aria-hidden="true"></i>
+                                    </a>
+
+                                </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                <a id="processed-toggle" class="p-3" style="color: #1da1f2;font-size: 15px;cursor: pointer;" >View More</a>
+
+
+
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Scripts -->
+    <script src="{% static 'plugins/common/common.min.js' %}"></script>
+    <script src="{% static 'js/custom.min.js' %}"></script>
+    <script src="{% static 'js/settings.js' %}"></script>
+    <script src="{% static 'js/gleek.js' %}"></script>
+    <script src="{% static 'js/styleSwitcher.js' %}"></script>
+
+    <script>
+        // Toggle visibility for datasets
+        function setupToggle(sectionClass, buttonId) {
+            const items = document.querySelectorAll(`.${sectionClass} .dataset-item`);
+            const button = document.getElementById(buttonId);
+            const limit = 4;
+            let expanded = false;
+
+            function updateVisibility() {
+                items.forEach((item, index) => {
+                    item.style.display = expanded || index < limit ? "block" : "none";
+                });
+                button.textContent = expanded ? "View Less" : "View More";
+            }
+
+            button.addEventListener("click", () => {
+                expanded = !expanded;
+                updateVisibility();
+            });
+
+            updateVisibility();
+        }
+
+        setupToggle("processed-datasets", "processed-toggle");
+        setupToggle("raw-datasets", "raw-toggle");
+
+        function visualizeprepData(fileId) {
+            const loading = document.createElement("div");
+            loading.textContent = "Loading...";
+            loading.style.textAlign = "center";
+            document.body.appendChild(loading);
+            window.location.href = `/visualise-data/preproccessed/${fileId}/`;
+        }
+
+         function visualizerawData(fileId) {
+            const loading = document.createElement("div");
+            loading.textContent = "Loading...";
+            loading.style.textAlign = "center";
+            document.body.appendChild(loading);
+            window.location.href = `/visualise-data/raw/${fileId}/`;
+        }
+
+    </script>
+</body>
+
+</html>

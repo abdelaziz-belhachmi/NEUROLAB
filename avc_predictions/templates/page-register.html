@@ -1,0 +1,151 @@
+
+<!DOCTYPE html>
+{% load static %}
+
+<html class="h-100" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Sign Up Page</title>
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static '../../assets/images/favicon.png' %}">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+    
+</head>
+
+<body class="h-100">
+
+  <style>
+
+      body {
+    background: linear-gradient(to left, #1da1f2, #0079be);
+          height: 100%;
+      }
+
+    </style>
+    <!--*******************
+        Preloader start
+    ********************-->
+    <div id="preloader">
+        <div class="loader">
+            <svg class="circular" viewBox="25 25 50 50">
+                <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="3" stroke-miterlimit="10" />
+            </svg>
+        </div>
+    </div>
+    <!--*******************
+        Preloader end
+    ********************-->
+
+    
+
+
+
+    <div class="login-form-bg h-100">
+        <div class="container h-100">
+            <div class="row justify-content-center h-100">
+                <div class="col-xl-6">
+                    <div class="form-input-content">
+                        <div class="card mt-5  mb-5 login-form ">
+                            <div class="card-body pt-5">
+                                
+                                    <a class="text-center" href="{% url 'index' %}"><h2 style="color: #1da1f2">NeuroLab</h2></a>
+        
+<form class="mt-5 mb-5 login-input" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <div class="form-group">
+        <label for="{{ form.username.id }}">Username</label>
+        <input type="text" name="username" class="form-control" id="{{ form.username.id }}" value="{{ form.username.value }}">
+    </div>
+
+    <div class="form-group">
+        <label for="{{ form.email.id }}">Email</label>
+        <input type="email" name="email" class="form-control" id="{{ form.email.id }}" value="{{ form.email.value }}">
+    </div>
+
+    <div class="form-group">
+        <label for="{{ form.password1.id }}">Password</label>
+        <input type="password" name="password1" class="form-control" id="{{ form.password1.id }}" value="{{ form.password1.value }}">
+    </div>
+    <div class="form-group">
+        <label for="{{ form.password2.id }}">ReType Password</label>
+        <input type="password" name="password2" class="form-control" id="{{ form.password2.id }}" value="{{ form.password2.value }}">
+    </div>
+
+    <div class="form-group">
+        <label for="{{ form.profile_picture_path.id }}">Profile Picture</label>
+        <input type="file" name="profile_picture_path" class="form-control" id="{{ form.profile_picture_path.id }}">
+    </div>
+
+    <div class="form-group">
+        <label for="{{ form.country.id }}">Country</label>
+        <input type="text" name="country" class="form-control" id="{{ form.country.id }}" value="{{ form.country.value }}">
+    </div>
+
+    <div class="form-group">
+        <label for="{{ form.full_name.id }}">Full Name</label>
+        <input type="text" name="full_name" class="form-control" id="{{ form.full_name.id }}" value="{{ form.full_name.value }}">
+    </div>
+
+<div class="form-group">
+    <label for="{{ form.status.id_for_label }}">Status</label>
+    <select name="status" class="form-control" id="{{ form.status.id_for_label }}">
+        {% for value, display in form.status.field.choices %}
+            <option value="{{ value }}" {% if form.status.value == value %}selected{% endif %}>
+                {{ display }}
+            </option>
+        {% endfor %}
+    </select>
+</div>
+
+
+
+    <button type="submit" class="btn login-form__btn submit w-100">Sign Up</button>
+</form>
+
+{% if form.errors %}
+    <div class="alert alert-danger mt-3">
+        <ul>
+            {% for field in form %}
+                {% for error in field.errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+            {% endfor %}
+        </ul>
+    </div>
+{% endif %}
+
+
+                                    <p class="mt-5 login-form__footer">Have account <a href="{% url 'page-login' %}" class="text-info">Login </a> now</p>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+    
+
+    <!--**********************************
+        Scripts
+    ***********************************-->
+    <script src="{% static 'plugins/common/common.min.js' %}"></script>
+    <script src="{% static 'js/custom.min.js' %}"></script>
+    <script src="{% static 'js/settings.js' %}"></script>
+    <script src="{% static 'js/gleek.js' %}"></script>
+    <script src="{% static 'js/styleSwitcher.js' %}"></script>
+</body>
+</html>
+
+
+
+
+

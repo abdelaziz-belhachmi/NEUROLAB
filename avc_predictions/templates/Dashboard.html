@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Dashboard</title>
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'images/favicon.png' %}">
+    <!-- Custom Stylesheet -->
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+
+</head>
+
+<body>
+
+    <!--*******************
+        Preloader start
+    ********************-->
+<script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module"></script>
+
+  <!-- Preloader -->
+  <div id="preloader">
+    <div class="loader" style="width: 500px ; height: 500px">
+      <dotlottie-player src="https://lottie.host/a6b65616-a569-446b-b6a8-3554c702a30f/pKb3z3phFw.lottie" background="transparent" speed="1.5" style="width: 100%; height: 100%" loop autoplay></dotlottie-player>
+    </div>
+  </div>
+    <!--*******************
+        Preloader end
+    ********************-->
+
+    
+    <!--**********************************
+        Main wrapper start
+    ***********************************-->
+    <div id="main-wrapper"  style="height: 130vh !important;">
+
+{% include "navbar.html" %}
+
+{% include "sideBar.html" %}
+
+
+        <!--**********************************
+            Content body start
+        ***********************************-->
+        <div class="content-body">
+
+<!--            <div class="row page-titles mx-0">-->
+<!--                <div class="col p-md-0">-->
+<!--                    <ol class="breadcrumb">-->
+<!--                        <li class="breadcrumb-item"><a href="#">Dashboard</a></li>-->
+<!--                        <li class="breadcrumb-item active"><a href="#">Home</a></li>-->
+<!--                    </ol>-->
+<!--                </div>-->
+<!--            </div>-->
+            <!-- row -->
+
+            <div class="container-fluid">
+                <div class="row">
+                    {% include 'CardCompenent.html'%}
+                </div>
+            </div>
+            <!-- #/ container -->
+        </div>
+        <!--**********************************
+            Content body end
+        ***********************************-->
+        
+        
+
+
+    </div>
+    <!--**********************************
+        Main wrapper end
+    ***********************************-->
+
+    <!--**********************************
+        Scripts
+    ***********************************-->
+    <script src="{% static 'plugins/common/common.min.js' %}"></script>
+    <script src="{% static 'js/custom.min.js' %}"></script>
+    <script src="{% static 'js/settings.js' %}"></script>
+    <script src="{% static 'js/gleek.js' %}"></script>
+    <script src="{% static 'js/styleSwitcher.js' %}"></script>
+
+</body>
+
+</html>

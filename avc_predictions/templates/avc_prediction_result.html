@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Training Result</title>
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'images/favicon.png' %}">
+    <!-- Custom Stylesheet -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css">
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+
+</head>
+
+<body>
+    <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        .results-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 24px;
+        }
+
+        .result-card {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            border-radius: 20px;
+            padding: 32px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            margin-bottom: 24px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .result-title {
+            text-align: center;
+            font-size: 28px;
+            font-weight: 700;
+            color: #2d3748;
+            margin-bottom: 24px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .chart-container {
+            background: white;
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+            max-width: 400px;
+            margin: 0 auto 24px auto;
+            border: 1px solid #e2e8f0;
+        }
+
+        .risk-factors-card {
+            background: white;
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s ease;
+        }
+
+        .risk-factors-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 35px rgba(29, 161, 242, 0.15);
+        }
+
+        .risk-factors-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+        }
+
+        .risk-factors-title::before {
+            content: "📊";
+            margin-right: 8px;
+            font-size: 20px;
+        }
+
+        .risk-factor-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 16px;
+            margin-bottom: 8px;
+            background: #f8fafc;
+            border-radius: 10px;
+            border-left: 4px solid #1da1f2;
+            transition: all 0.3s ease;
+        }
+
+        .risk-factor-item:hover {
+            background: #e2e8f0;
+            transform: translateX(4px);
+        }
+
+        .risk-factor-label {
+            font-weight: 600;
+            color: #4a5568;
+            font-size: 14px;
+        }
+
+        .risk-factor-value {
+            font-weight: 500;
+            color: #2d3748;
+            font-size: 14px;
+            background: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .failure-card {
+            background: linear-gradient(135deg, #fef5e7 0%, #fed7aa 100%);
+            border: 2px solid #f59e0b;
+            border-radius: 20px;
+            padding: 32px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(245, 158, 11, 0.2);
+        }
+
+        .failure-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #92400e;
+            margin-bottom: 20px;
+        }
+
+        .failure-image {
+            max-height: 300px;
+            margin: 20px 0;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .failure-message {
+            font-size: 16px;
+            color: #92400e;
+            font-weight: 500;
+            background: white;
+            padding: 16px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+
+        .success-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            align-items: start;
+            margin-bottom: 24px;
+        }
+
+        .health-advice-card {
+            background: white;
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s ease;
+        }
+
+        .advice-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .advice-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #2d3748;
+            margin: 0;
+        }
+
+        .generate-advice-btn {
+            background: linear-gradient(135deg, #a0d8fb 0%, #1da1f2 100%);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(29, 161, 242, 0.3);
+        }
+
+        .generate-advice-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(29, 161, 242, 0.4);
+        }
+
+        .generate-advice-btn:disabled {
+            background: #cbd5e0;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .advice-content {
+            min-height: 120px;
+        }
+
+        .advice-placeholder {
+            text-align: center;
+            padding: 32px 16px;
+            color: #718096;
+        }
+
+        .advice-icon {
+            font-size: 32px;
+            color: #a0aec0;
+            margin-bottom: 12px;
+        }
+
+        .advice-text {
+            line-height: 1.6;
+            color: #2d3748;
+            background: #f8fafc;
+            padding: 20px;
+            border-radius: 12px;
+            border-left: 4px solid #1da1f2;
+        }
+
+        .advice-text h5 {
+            color: #1da1f2;
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+
+        .advice-text ul {
+            margin: 12px 0;
+            padding-left: 20px;
+        }
+
+        .advice-text li {
+            margin-bottom: 8px;
+        }
+
+        .advice-loader {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 32px 16px;
+            color: #718096;
+        }
+
+        .loader-spinner {
+            width: 32px;
+            height: 32px;
+            border: 3px solid #e2e8f0;
+            border-top: 3px solid #1da1f2;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 12px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 768px) {
+            .success-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .results-container {
+                padding: 16px;
+            }
+
+            .result-card {
+                padding: 20px;
+            }
+
+            .advice-header {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .generate-advice-btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        /* Chart styling enhancements */
+        #riskGaugeChart {
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
+        }
+
+        /* Animation for success state */
+        .success-animation {
+            animation: slideInUp 0.6s ease-out;
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+
+    <div id="main-wrapper" style="min-height: 130vh !important;">
+
+        {% include "navbar.html" %}
+        {% include "sideBar.html" %}
+
+        <div class="content-body">
+            <div class="results-container">
+
+                {% if status == 'failed' %}
+                    <div class="failure-card">
+                        <h2 class="failure-title">Prediction Failed</h2>
+                        <img class="failure-image" src="{{STATIC_URL}}/static/images/webmaintenance.png" alt="Maintenance">
+                        <div class="failure-message">
+                            {{ result }}
+                        </div>
+                    </div>
+                {% endif %}
+
+                {% if status == 'success' %}
+                    <div class="result-card success-animation">
+                        <h2 class="result-title">Predicted AVC Risk</h2>
+
+                        <div class="success-grid">
+                            <div class="chart-container">
+                                <canvas id="riskGaugeChart"></canvas>
+                            </div>
+
+                            <div class="risk-factors-card">
+                                <h4 class="risk-factors-title">Key Factors</h4>
+                                <div class="risk-factor-item">
+                                    <span class="risk-factor-label">Age</span>
+                                    <span class="risk-factor-value">{{ userinp.age }}</span>
+                                </div>
+                                <div class="risk-factor-item">
+                                    <span class="risk-factor-label">BMI</span>
+                                    <span class="risk-factor-value">{{ userinp.bmi }}</span>
+                                </div>
+                                <div class="risk-factor-item">
+                                    <span class="risk-factor-label">Glucose Level</span>
+                                    <span class="risk-factor-value">{{ userinp.avg_glucose_level }}</span>
+                                </div>
+                                <div class="risk-factor-item">
+                                    <span class="risk-factor-label">Smoking</span>
+                                    <span class="risk-factor-value">{{ userinp.smoking_status }}</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Health Advice Section -->
+                        <div class="health-advice-card">
+                            <div class="advice-header">
+                                <h4 class="advice-title">🎯 Personalized Health Recommendations</h4>
+                                <button id="generateAdviceBtn" class="generate-advice-btn">
+                                    <i class="fas fa-magic"></i> Generate AI Advice
+                                </button>
+                            </div>
+                            <div id="adviceContent" class="advice-content">
+                                <div class="advice-placeholder">
+                                    <i class="fas fa-lightbulb advice-icon"></i>
+                                    <p>Click "Generate AI Advice" to get personalized health recommendations based on your risk factors.</p>
+                                </div>
+                            </div>
+                            <div id="adviceLoader" class="advice-loader" style="display: none;">
+                                <div class="loader-spinner"></div>
+                                <p>Generating personalized advice...</p>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+
+            </div>
+        </div>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const ctx = document.getElementById('riskGaugeChart');
+            if (ctx) {
+                const chartContext = ctx.getContext('2d');
+
+                rs = {{ probability | default:0 }}; // Default to 0 if not present
+                riskValue = Math.floor(rs)+1;
+                if (riskValue < 40) {
+                    confetti({ particleCount: 300, spread: 100, origin: { y: 0.6 } });
+                }
+                const Predicted = '{{ Predicted }}';
+
+                const gaugeChart = new Chart(chartContext, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Low', 'Medium', 'High'],
+                        datasets: [{
+                            data: [riskValue, 100 - riskValue],
+                            backgroundColor: [
+                                riskValue < 40 ? '#4CAF50' : (riskValue < 70 ? '#FFA500' : '#F44336'),
+                                '#E0E0E0'
+                            ],
+                            borderWidth: 0,
+                            cutout: '80%',
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            tooltip: { enabled: false },
+                            legend: { display: false },
+                            title: {
+                                display: true,
+                                text: 'Risk of AVC: ' + riskValue + '%',
+                                font: {
+                                    size: 18,
+                                    weight: 'bold'
+                                },
+                                color: '#2d3748'
+                            }
+                        }
+                    }
+                });
+            }
+
+            // Health Advice Generation
+            const generateAdviceBtn = document.getElementById('generateAdviceBtn');
+            const adviceContent = document.getElementById('adviceContent');
+            const adviceLoader = document.getElementById('adviceLoader');
+
+            if (generateAdviceBtn) {
+                generateAdviceBtn.addEventListener('click', async function() {
+                    // Show loader and disable button
+                    adviceContent.style.display = 'none';
+                    adviceLoader.style.display = 'flex';
+                    generateAdviceBtn.disabled = true;
+                    generateAdviceBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Generating...';
+
+                    try {
+                        // Prepare user data for the AI request
+                        const userData = {
+                            age: '{{ userinp.age }}',
+                            bmi: '{{ userinp.bmi }}',
+                            glucose_level: '{{ userinp.avg_glucose_level }}',
+                            smoking_status: '{{ userinp.smoking_status }}',
+                            gender: '{{ userinp.gender }}',
+                            hypertension: '{{ userinp.hypertension }}',
+                            heart_disease: '{{ userinp.heart_disease }}',
+                            work_type: '{{ userinp.work_type }}',
+                            residence_type: '{{ userinp.Residence_type }}',
+                            ever_married: '{{ userinp.ever_married }}',
+                            risk_percentage: riskValue
+                        };
+
+                        // Make API call to your Django backend
+                        const response = await fetch('/generate-health-advice/', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]')?.value || ''
+                            },
+                            body: JSON.stringify(userData)
+                        });
+
+                        if (!response.ok) {
+                            throw new Error('Failed to generate advice');
+                        }
+
+                        const data = await response.json();
+
+                        // Display the advice
+                        adviceContent.innerHTML = `
+                            <div class="advice-text">
+                                ${data.advice}
+                            </div>
+                        `;
+
+                    } catch (error) {
+                        console.error('Error generating advice:', error);
+                        adviceContent.innerHTML = `
+                            <div class="advice-text" style="border-left-color: #f56565; background: #fed7d7;">
+                                <h5 style="color: #c53030;">Unable to Generate Advice</h5>
+                                <p>We're having trouble connecting to our AI service right now. Please try again later or consult with your healthcare provider for personalized advice.</p>
+                            </div>
+                        `;
+                    } finally {
+                        // Hide loader and re-enable button
+                        adviceLoader.style.display = 'none';
+                        adviceContent.style.display = 'block';
+                        generateAdviceBtn.disabled = false;
+                        generateAdviceBtn.innerHTML = '<i class="fas fa-refresh"></i> Generate New Advice';
+                    }
+                });
+            }
+        });
+    </script>
+
+    <!-- Scripts -->
+    <script src="{% static 'plugins/common/common.min.js' %}"></script>
+    <script src="{% static 'js/custom.min.js' %}"></script>
+    <script src="{% static 'js/settings.js' %}"></script>
+    <script src="{% static 'js/gleek.js' %}"></script>
+    <script src="{% static 'js/styleSwitcher.js' %}"></script>
+
+    <script>
+        // Toggle visibility for datasets
+        function setupToggle(sectionClass, buttonId) {
+            const items = document.querySelectorAll(`.${sectionClass} .dataset-item`);
+            const button = document.getElementById(buttonId);
+            const limit = 4;
+
+            let expanded = false;
+
+            function updateVisibility() {
+                items.forEach((item, index) => {
+                    item.style.display = expanded || index < limit ? "block" : "none";
+                });
+                button.textContent = expanded ? "View Less" : "View More";
+            }
+
+            if (button) {
+                button.addEventListener("click", () => {
+                    expanded = !expanded;
+                    updateVisibility();
+                });
+
+                updateVisibility();
+            }
+        }
+
+        setupToggle("processed-datasets", "processed-toggle");
+        setupToggle("raw-datasets", "raw-toggle");
+
+        function visualizeData(fileId) {
+            window.location.href = `/visualise-data/${fileId}/`;
+        }
+    </script>
+</body>
+
+</html>
